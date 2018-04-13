@@ -15,7 +15,7 @@ var numbers = [[19, 26, 26.5, 27.8, 29.9, 30.1, 34.4],
 // height and width determines the size of the chart
 
 // change margin to get different size of viewBox
-var margin = { left: 150, top: 10, right: 50, bottom: 130 }
+var margin = { left: 100, top: 10, right: 50, bottom: 130 }
 var width = 600
 var height = 180
 // marginRatio converts margin absolute values to
