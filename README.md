@@ -10,5 +10,5 @@
 Large Size Sample:
 ![alt text](http://i68.tinypic.com/642azq.png)
 
-Small Size Sample
+Small Size Sample:
 ![alt text](http://i68.tinypic.com/242hdeu.png)
