@@ -1,0 +1,73 @@
+/* CSS that makes chart responsive */
+.chart {
+	font-family: 'Lato',sans-serif;
+  max-width: 1000px;
+  width: 100%;
+  margin: auto auto;
+}
+.svg-container {
+    position: relative;
+    width: 100%;
+    /*padding-bottom: 100%;*/
+    overflow: hidden;
+}
+
+
+/* CSS that styles the chart */
+.chart rect {
+  fill: #96C2E8;
+}
+
+#chart0 g:nth-of-type(3) rect, #chart1 g:nth-of-type(2) rect, #chart2 g:nth-of-type(9) rect{
+  fill:#7DA54D;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+}
+
+.chart .x text {
+	font-style: italic;
+	transform: rotate(-45deg) translate(-30px,0px);
+	-ms-transform:rotate(-45deg) translate(-30px,0px);
+	-webkit-transform: rotate(-45deg) translate(-30px,0px);
+}
+
+
+
+.chart .tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 100px;          
+    height: auto;         
+    padding: 2px;       
+    font-size: 16px;
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
+.chartTitle {
+	text-align: center;
+	font-size: 1.5em;
+	font-style: italic;
+	font-weight: 600;
+}
+
+@media only screen and (max-width: 500px){
+	.barText {
+		font-size: 130% !important; transform: translateY(-34px);
+	}
+
+/*change the label for US*/
+	#chart2 svg > g:nth-of-type(1) .barText{
+		font-size: 130% !important; transform: translateY(155px);
+	}
+
+	.chartTitle {
+		padding-bottom: 20px;
+	}
+}
