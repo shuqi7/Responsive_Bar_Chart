@@ -7,3 +7,8 @@
 * Tooltips to explain further details
 * Fit with all different screen sizes
 
+Large Size Sample:
+![alt text](https://ibb.co/hJvyE7)
+
+Small Size Sample
+![alt text](https://ibb.co/hwnjnS)
