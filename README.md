@@ -8,7 +8,7 @@
 * Fit with all different screen sizes
 
 Large Size Sample:
-![alt text](https://ibb.co/hJvyE7)
+![alt text](http://i68.tinypic.com/642azq.png)
 
 Small Size Sample
-![alt text](https://ibb.co/hwnjnS)
+![alt text](http://i68.tinypic.com/242hdeu.png)
