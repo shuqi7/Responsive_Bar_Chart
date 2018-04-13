@@ -8,6 +8,7 @@
 * Fit with all different screen sizes
 
 (Please ignore the scaling of the images)
+
 Large Size Sample:
 ![alt text](http://i68.tinypic.com/642azq.png)
 
