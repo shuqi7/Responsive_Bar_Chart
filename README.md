@@ -1,6 +1,6 @@
 # Responsive_Bar_Chart
 
-**Live Site:
+**Live Site: https://shuqi7.github.io/Responsive_Bar_Chart/
 
 * A responsive bar chart built based on d3.js
 * Capable of adjusting text sizes, label positions, bar width and height according to different screen sizes
