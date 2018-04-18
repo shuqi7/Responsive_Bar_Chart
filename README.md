@@ -8,9 +8,6 @@
 * Tooltips to explain further details
 * Fit with all different screen sizes
 
-
-(Please ignore the scaling of the images)
-
 Large Size Sample:
 ![alt text](http://i64.tinypic.com/16kx8uu.png)
 
