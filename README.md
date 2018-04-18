@@ -1,4 +1,5 @@
 # Responsive_Bar_Chart
+*Fully support bad boys IE and Edge with designated codes to make them working
 
 **Live Site: https://shuqi7.github.io/Responsive_Bar_Chart/
 
@@ -6,6 +7,7 @@
 * Capable of adjusting text sizes, label positions, bar width and height according to different screen sizes
 * Tooltips to explain further details
 * Fit with all different screen sizes
+
 
 (Please ignore the scaling of the images)
 
