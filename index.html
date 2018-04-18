@@ -2,25 +2,31 @@
 <html>
 <meta http-equiv=X-UA-Compatible content="IE=9;IE=10;IE=11;IE=Edge,chrome=1">
 <head>
-	<title>charts</title>
+	<title>responsive bar charts</title>
 	<link rel="stylesheet" type="text/css" href="responsive-bar-chart.css">
-
-
 </head>
 <body>
-	<div class="chart" id="chart0">
-		<div class="chartTitle">Competitive Corporate Tax Rates</div>
-		
-	</div>
-	<div class="chart" id="chart1">
-		<div class="chartTitle">Lower than Most U.S. States</div>
-		
-	</div>
-	<div class="chart" id="chart2">
-		<div class="chartTitle">And Best R&D Tax Credits</div>
+
+	<div class="grid-12">
+
+		<div class="chart" id="chart0">
+			<h2 class="text-uppercase chartTitle">Competitive corporate tax rates (%)</h2>
+			<p class="intro">Combined national/sub-national rates</p>
+		</div>
+
+		<div class="chart" id="chart1">
+			<h2 class="text-uppercase chartTitle">Lower than most U.S. States (%)</h2>
+		</div>
+
+		<div class="chart" id="chart2">`
+			<h2 class="text-uppercase chartTitle">The best <abbr title="Research and development">R&amp;D</abbr> tax credits (%)</h2>
+		</div>
+
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<script src="responsive-bar-chart.js"></script>
 </body>
 </html>

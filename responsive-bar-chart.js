@@ -3,7 +3,7 @@
 function getRatio (side) {
   return ((margin[side] / width) * 100) + '%';
 }
-// data
+// Simple example dataset
 var regions = [['U.K', 'U.S.', 'Ontario', 'Italy', 'Japan', 'Germany', 'France'],
 			   ['Texas', 'Ontario', 'New York', 'Illinois', 'Massachusetts', 'California'],
 			   ['U.S.', 'U.K.', 'Japan', 'Germany', 'Italy', 'Australia', 'France', "Netherland","Ontario"]]
@@ -11,11 +11,11 @@ var numbers = [[19, 26, 26.5, 27.8, 29.9, 30.1, 34.4],
 			   [26, 26.5, 27.5, 28.8, 29, 29.8],
 			   [0, 11.9, 12.8, 16, 21, 22.1, 22.4, 26, 27.8]]
 // Declare Dimensions to create graph
-// Margin for x and y axes
-// height and width determines the size of the chart
-
-// change margin to get different size of viewBox
-var margin = { left: 100, top: 10, right: 50, bottom: 130 }
+// Margin is used to show x and y axes
+// Size here is declared in pixels, although this
+// defines the relative values, since the chart changes depending
+// on container
+var margin = { left: 80, top: 10, right: 30, bottom: 120 }
 var width = 600
 var height = 180
 // marginRatio converts margin absolute values to
@@ -27,6 +27,10 @@ var marginRatio = {
   bottom: getRatio('bottom')
 }
 
+//define tooltip
+var tooltip = d3.select(".chart").append("div") 
+		    .attr("class", "tooltip")       
+		    .style("opacity", 0);
 
 // generate bar chart
 var generate = function(){
@@ -51,30 +55,37 @@ var generate = function(){
 		    .attr('viewBox', '0 0 ' + (width + margin.left + margin.right) + ' ' + (height + margin.top + margin.bottom))
 		    // Id to target with CSS
 		    .attr('class', 'svg-content-responsive')
-		// Define x axis
+		// Define the x scale as ordinal, ordinal means the data cannot be meassured by a
+		// standard of difference. This is different to a linear scale that we will use later
 		var x = d3.scale.ordinal()
 		// Domain stands for input domain, this is the data we want to display
 		    .domain(region)
+		    // Range stands for Output Range, this is the width the data will take up
+		    // Here it is used for the x axis. 0 is the start of our graph, width is the
+		    // end of it
 		    .rangeRoundBands([0, width], 0.1, 0.1)
-		
+		// Here we define the x axis using the svg.axis() method. The x scale we just
+		// defined tells the axis what data to display and how big the intervals
+		// between that data is on the axis. Orient bottom means it will be shown below
+		// the bars.
 		var xAxis = d3.svg.axis()
 		    .scale(x)
 		    .orient('bottom')
-		//Define y axis
+		// Here we repeat the process for the y axis. The difference is that we have numerical
+		// data, so we can use scale.linear.
 		var y = d3.scale.linear()
+		// Instead of using the whole array for the input domain, we use 0, since we
+		// want our y axis to start at 0, and the biggest value of our dataset
+		// d3.max returns the largest value of an array
 		    .domain([d3.max(number) + 5, 0])
 		    .range([0, height])
-		
+		// This is defined in the same wat the x axis is defined, except the orient is now left
+		// instead of bottom - for obvious reasons.
 		var yAxis = d3.svg.axis()
 		    .scale(y)
 		    .orient('left')
 
-		// Bind data to bar groups
-		var bar = svg.selectAll('g')
-		    .data(number)
-		    .enter()
-		    .append('g')
-		    .attr('transform', function (d, j) { return 'translate(' + (j * (barWidth+28.5) + 21)+ ', 0)' })
+		
 		// Add x axis to svgContainer
 		svg.append('g')
 		    .attr('class', 'x axis')
@@ -87,6 +98,26 @@ var generate = function(){
 		    .call(yAxis)
 		    .style("font-size", "12px")
 
+		// add horizontal gridlines
+		d3.selectAll(chartString + " .y g line")
+			.attr("x1","-6")
+			.attr("x2", "600")
+			.style("stroke", "rgba(0, 0, 0, 0.18)")
+
+		// draw the bar chart after grid line so the gridlines are behind the bar chart
+		// Bind data to bar groups
+		var bar = svg.selectAll('g')
+			// filter all g appended to x and y axis to the svg and then bind the data
+			.filter(function() {
+				// using d3 selectors instead of native JS because IE freaking sucks and does not support classList
+				return !(d3.select(this).attr("class") === "x axis") && !(d3.select(this).attr("class") === "y axis") && !(d3.select(this).attr("class") === "tick");
+		    	//return !(this.classList.contains('axis') || this.classList.contains('tick') );
+		    })
+		    .data(number)
+		    .enter()
+		    .append('g')
+		    .attr('transform', function (d, j) { return 'translate(' + (j * (barWidth+28.5) + 21)+ ', 0)' })
+
 		//add % to y-axis
 		d3.select(chartString + ' .y')
 		  .selectAll('text')
@@ -94,10 +125,10 @@ var generate = function(){
 		    return d + "%";
 		  })
 		  
-		// Add bars
+		// Add SVG rectangles that act as bars
 		// barWidth is calculated dynamically from the width divided by data.length
 		// The y attribute and height is based on the data, scaled to the height of
-		// graph. 
+		// graph. Remember input domain and output range
 		bar.append('rect')
 		    .attr('class', 'bar')
 		    // -30 for the spacing between bars
@@ -107,26 +138,7 @@ var generate = function(){
 
 
 
-	  // Define the div for the tooltip
-	  // c
-	  var tooltip = d3.select("#chart2").append("div") 
-	    .attr("class", "tooltip")       
-	    .style("opacity", 0);
-
-	  bar.on("mouseover", function(d) {    
-	            tooltip.transition()    
-	                .duration(200)    
-	                .style("opacity", .9);    
-	            tooltip.html("Tax Rate: " + "<br/>" + d + "%")
-	                .style("left", (d3.event.pageX) + "px")   
-	                .style("top", (d3.event.pageY - 28) + "px");  
-	            })          
-	        .on("mouseout", function(d) {   
-	            tooltip.transition()    
-	                .duration(500)    
-	                .style("opacity", 0); 
-	        });
-
+	  
 	  // Define data on top of bar
 	  var barText = bar.append("g")
 	                  .append("text")
@@ -150,43 +162,57 @@ var generate = function(){
 	                       return d + "%";
 	                  })
 	                  .style("font-size", "12px");
-	  
-	}
 
+
+		// add Event listeners to tooltips 
+		bar.on("mouseover", function(d) {    
+            tooltip.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            tooltip.html("Rate: " + "<br/>" + d + "%")
+                .style("left", function(){
+                	// for smart position of the tooltip
+                	return d3.event.pageX > (window.innerWidth - 100) ? (d3.event.pageX - 100) + "px" : d3.event.pageX + "px";
+                	 
+                })   
+                .style("top", (d3.event.pageY - 28) + "px");  
+            })          
+        .on("mouseout", function(d) {   
+            tooltip.transition()    
+                .duration(500)    
+                .style("opacity", 0); 
+        });
+	  	
+	}
+	
 }
 
-// resize function to fit different window size
-// this function redraws the chart everytime 
+
+
 var resize = function(){
-	// clear the chart
+	//clear and redraw the graph
 	d3.selectAll(".svg-container").remove();
 
-	//modify the height to fit the current width
-	//change 240 to get different ratio
+	//modify the height
 	height = width/window.innerWidth * 240;
 	height = height <= 180 ? 180 : height;
+		generate();
 
-	// redraw the chart
-	generate();
-
-	// get the ratio to resize the labels on both X and Y axes
-	var currWidth = window.innerWidth;
+		var currWidth = window.innerWidth;
 	var currRatio = (600/currWidth) * 1.2;
 	currRatio = currRatio <= 1 ? 1 : currRatio;
 
-	//function to apply the ratio to scale text
+	//function to calculate ratio to scale text
 	function ratioScale(d, i, domElement) {
-		//only modify transform part
+		//only get transform part
    		var currTransform = domElement.getAttribute("transform");
-   		// remove previous scale data and keep the translate part
+   		// remove previous scale data
    		if (currTransform.indexOf("scale") != -1){
    			currTransform = currTransform.substring(0, currTransform.indexOf("scale"));
    		}
-   		// get the new transform style
    		var newTransform = currTransform + "scale(" + currRatio +")";
    		domElement.setAttribute("transform", newTransform);
 	}
-
 	//modify text on x-axis
 	var xAixsg = d3.selectAll(".x g")
 				   .each(function(d, i){
@@ -198,11 +224,22 @@ var resize = function(){
 				   .each(function(d, i){
 				   		ratioScale(d, i, this);
 				   })
+
+	/* ----- for IE and edge to rotate the text on X-axis*/
+	if (window.innerWidth <= 500) {
+		$(".x text").each(function(){
+	        transform = $(this).css('transform');
+	        $(this).attr('transform',transform);
+	    }); 
+	}
 }
 
-//calling the function to generate the chart
-generate();
-//resize to get the best size
+
+
+// generate the bar chart and resize it
 resize();
+
+		
+
 
 window.onresize = resize;
