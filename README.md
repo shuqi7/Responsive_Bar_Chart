@@ -12,7 +12,7 @@
 (Please ignore the scaling of the images)
 
 Large Size Sample:
-![alt text](http://i68.tinypic.com/642azq.png)
+![alt text](http://i64.tinypic.com/16kx8uu.png)
 
 Small Size Sample:
-![alt text](http://i68.tinypic.com/242hdeu.png)
+![alt text](http://i63.tinypic.com/scuxqf.png)
