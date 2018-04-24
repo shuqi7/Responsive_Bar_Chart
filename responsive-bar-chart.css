@@ -1,20 +1,11 @@
-
-
-
-
 /* CSS that makes chart responsive */
 
 svg{
 	height: auto;
 }
-.chart {
-	font-family: 'Lato',sans-serif;
-  max-width: 1000px;
-  width: 100%;
-  margin: auto auto;
-}
 
-/*------ for responsiveness and height set in IE ------ */
+
+
 .svg-container {
     display: block;
     position: relative;
@@ -25,23 +16,29 @@ svg{
 }
 
 
-
 .svg-container svg { 
     display: block;
     position: absolute;
     top: 0;
     left: 0; 
 }
-/*--------------------------------------------------------*/
 
 
-/* CSS that styles the chart */
-.chart rect {
-  fill: #96C2E8;
+
+.chart {
+	font-family: 'Lato',sans-serif;
+  	max-width: 1000px;
+  	width: 100%;
+  	margin: auto auto;
 }
 
+.chart rect {
+  	fill: #96C2E8;
+}
+
+/* to make the color of Ontario different*/
 #chart0 g:nth-of-type(3) rect, #chart1 g:nth-of-type(2) rect, #chart2 g:nth-of-type(9) rect{
-  fill:#7DA54D;
+  	fill:#7DA54D;
 }
 
 
@@ -52,15 +49,14 @@ svg{
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
+  	fill: none;
+  	stroke: #000;
 }
 
 .chart .x text {
 	font-style: italic;
 	
 }
-
 
 
 .chart .tooltip { 
@@ -89,6 +85,9 @@ svg{
 }
 
 
+.barText{
+	font-size: 12px
+}
 
 
 @media (max-width: 959px) and (min-width:500px){
@@ -107,14 +106,12 @@ svg{
 		margin-bottom: 130px;		
 	}
 
+	/* Hide text on the bar in smaller screens*/
 	.barText {
-		/*font-size: 130% !important; 
-		transform: translateY(-34px);
-		-ms-transform: translateY(-34px);*/
 		display: none;
 	}
 
-/*change the label for US*/
+	/*change the label for US*/
 	#chart2 svg > g:nth-of-type(1) .barText{
 		font-size: 130% !important; 
 		transform: translateY(155px);
@@ -134,7 +131,7 @@ svg{
 
 }
 
-
+/* for IE and Edge */
 
 @supports (-ms-accelerator:true) {
    /* IE Edge 12+ CSS */ 

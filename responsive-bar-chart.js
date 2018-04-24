@@ -84,8 +84,7 @@ var generate = function(){
 		var yAxis = d3.svg.axis()
 		    .scale(y)
 		    .orient('left')
-
-		
+	
 		// Add x axis to svgContainer
 		svg.append('g')
 		    .attr('class', 'x axis')
@@ -137,14 +136,13 @@ var generate = function(){
 		    .attr('height', function (d) { return height - y(d) })
 
 
-
-	  
-	  // Define data on top of bar
+	  // Define function to display data on top of each bar
 	  var barText = bar.append("g")
 	                  .append("text")
 	                  .attr("class", "barText")
 	                  .attr("fill", "#000")
 	                  // for shifting text hortizontally
+	                  // different i means to place text in different charts horizontally in different ways 
 	                  .attr("x", function(){
 	                  	if (i == 0) {
 	                  		return 9;
@@ -154,29 +152,31 @@ var generate = function(){
 	                  		return 2
 	                  	}
 	                  })
+	                  // for shifting text vertically
 	                  .attr("y", function(d) {
+	                  	  // d == 0 for USA which would work differently. 170 is the ideal position for the USA's bar text
 	                      return d == 0 ? 170 : y(d) + 15;
 
 	                  })
 	                  .text(function(d){
 	                       return d + "%";
-	                  })
-	                  .style("font-size", "12px");
+	                  });
 
 
 		// add Event listeners to tooltips 
+		// show tooltip when mouse over
 		bar.on("mouseover", function(d) {    
             tooltip.transition()    
                 .duration(200)    
                 .style("opacity", .9);    
             tooltip.html("Rate: " + "<br/>" + d + "%")
                 .style("left", function(){
-                	// for smart position of the tooltip
+                	// for smart position of the tooltip: tooltip appears on the left if it's exceeding the screen
                 	return d3.event.pageX > (window.innerWidth - 100) ? (d3.event.pageX - 100) + "px" : d3.event.pageX + "px";
-                	 
                 })   
                 .style("top", (d3.event.pageY - 28) + "px");  
-            })          
+            })        
+            // hide tooltip when mouse out  
         .on("mouseout", function(d) {   
             tooltip.transition()    
                 .duration(500)    
@@ -188,17 +188,19 @@ var generate = function(){
 }
 
 
-
+// functions for responsiveness
+// each time the window is resized, previous chart is cleared and redrawn
 var resize = function(){
 	//clear and redraw the graph
 	d3.selectAll(".svg-container").remove();
-
 	//modify the height
 	height = width/window.innerWidth * 240;
 	height = height <= 180 ? 180 : height;
-		generate();
+	// draw the charts
+	generate();
 
-		var currWidth = window.innerWidth;
+	// Ratios to scale the chart
+	var currWidth = window.innerWidth;
 	var currRatio = (600/currWidth) * 1.2;
 	currRatio = currRatio <= 1 ? 1 : currRatio;
 
@@ -238,8 +240,4 @@ var resize = function(){
 
 // generate the bar chart and resize it
 resize();
-
-		
-
-
 window.onresize = resize;
